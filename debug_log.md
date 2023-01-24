@@ -64,6 +64,7 @@ to line 82. After running again I got a different error:
 > [SQL: INSERT INTO pizza_topping (topping_type, pizza_id) VALUES (?, ?)]
 > [parameters: ('M', 7)]
 > (Background on this error at: http://sqlalche.me/e/13/gkpj)
+
 With using traceback technique I am adding: 
 ```
 if order_name and pizza_size_str and crust_type_str and toppings_list:
@@ -76,64 +77,66 @@ At line 71 and indenting everything underneath before the return. Now orders are
 After running the code and typing in my city, Modesto, it gave back: 
 >Internal Server Error, KeyError: 'name'. 
 
-[[I first wanted to check the api documentation to make sure the code was calling the correct api params, and that's where I found the problem. On line 39, 40, and 45:
-
+I first wanted to check the api documentation to make sure the code was calling the correct api params, and that's where I found the problem. On line 39, 40, and 45:
+```
 city = request.args.get('users_city')
 units = request.args.get('requested_units')
 ...
 'city': city,
-
-[[needs to be 
-
+```
+needs to be 
+```
 city = request.args.get('city')
 units = request.args.get('units')
 ...
 'q': city,
-
+```
 Running that, we again got an Internal server error but this time it was KeyError: 'temperature'. After using the traceback technique I found that on line 54:
-
+```
 'temp': result_json['main']['temperature'],
-
-[[there was a type and it needs to be 
-
+```
+there was a type and it needs to be 
+```
 'temp': result_json['main']['temp'],
+```
+Now everything is working fine. 
 
-[[Now everything is working fine. 
-]]
 
 ## Exercise 3
 
-[[After trying to run the code with python3 main.py I get this error and that it breaks at utils.py:
-
+After trying to run the code with python3 main.py I get this error and that it breaks at utils.py:
+```
 IndexError: list index out of range
 arr[k] = right_side[i]
-
-[[Using traceback technique I found that there is a type for right_side as it needs to be [j]:
-
+```
+Using traceback technique I found that there is a type for right_side as it needs to be [j]:
+```
 arr[k] = right_side[j]
-
+```
 after running python3 main.py we get another error:
 
-TypeError: list indices must be integers or slices, not float
+>TypeError: list indices must be integers or slices, not float
 
 seeing that it breaks in the binary_search function at the 'mid' variable on the log. Doing a traceback technique we find that: 
-
+```
 mid = len(arr) / 2
-
+```
 needs to be
-
+```
 mid = len(arr) // 2
-
+```
 After running main.py again we see that there are no more errors but it is not returning the list_of_nums properly. It was able to show the 
 sorted list of nums
+```
 [9, 7, 6, 5, 4, 3, 2, 2]
-
+```
 but I belieave what it is expected to show is
+```
 [9, 7, 6, 5, 4, 3, 2, 1]
+```
+Using traceforward technique I added 
+```
+k += 1 
+```
+to line 36 and 40. With that now everything is returning properly.
 
-Using traceforward technique I added k += 1 to line 36 and 40
-
-With that now everything is returning properly.
-
-
-]]

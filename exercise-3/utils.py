@@ -32,10 +32,12 @@ def merge_sort(arr):
     while i < len(left_side):
         arr[k] = left_side[i]
         i += 1
+        k += 1
 
     while j < len(right_side):
-        arr[k] = right_side[i]
+        arr[k] = right_side[j]
         j += 1
+        k += 1
 
 def binary_search(arr, elem):
     """Return the index of the given element within a sorted array."""
@@ -45,7 +47,7 @@ def binary_search(arr, elem):
   
     while low < high: 
   
-        mid = (high + low) / 2
+        mid = (high + low) // 2
   
         # Check if elem is present at mid 
         if arr[mid] < elem: 

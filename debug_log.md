@@ -15,69 +15,66 @@ _Then I noticed another bug ..._
 
 ## Exercise 1
 
-[[After running the program, I was given:]] 
-
-TypeError: 'topping' is an invalid keyword argument for PizzaTopping
-
-[[after trying to submit an order. With using the traceback technique I changed line 78 and 79 from:
-
+After running the program, I was given:
+> TypeError: 'topping' is an invalid keyword 
+> argument for PizzaTopping
+after trying to submit an order. With using the traceback technique I changed line 78 and 79 from:
+```
 for topping_str in ToppingType:
         pizza.toppings.append(PizzaTopping(topping=topping_str))
-
-[[to 
-
+```
+to 
+```
 for topping_str in toppings_list:
         pizza.toppings.append(PizzaTopping(topping_type=topping_str))
-
-[[After running the code again I got a different error:
-
-werkzeug.routing.BuildError: Could not build url for endpoint '/'. Did you mean 'fulfill_order' instead?
-
-[[Using traceback technique I changed line 84 from:
-
+```
+After running the code again I got a different error:
+> werkzeug.routing.BuildError: 
+> Could not build url for endpoint '/'. 
+> Did you mean 'fulfill_order' instead?
+Using traceback technique I changed line 84 from:
+```
 return redirect(url_for('/'))
-
-[[to
-
+```
+to
+```
 return redirect(url_for('home'))
-
-[[The error went away but the pizza would not display. I saw that I eneded to change lines 67, 68, and 70 from:
-
+```
+The error went away but the pizza would not display. I saw that I eneded to change lines 67, 68, and 70 from:
+```
 order_name = request.form.get('name')
 pizza_size_str = request.form.get('size')
 ...
 toppings_list = request.form.get('toppings')
-
-[[to
-
+```
+to
+```
 order_name = request.form.get('order_name')
 pizza_size_str = request.form.get('pizza_size')
 ...
 toppings_list = request.form.get('toppings') if request.form.getlist('toppings') else []
-
-[[After running again the pizza order was still now displaying, using the traceforward technique I am adding 
-
+```
+After running again the pizza order was still now displaying, using the traceforward technique I am adding 
+```
 db.session.commit()
+```
+to line 82. After running again I got a different error:
 
-[[to line 82. After running again I got a different error:
-
-sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) CHECK constraint failed: toppingtype
-[SQL: INSERT INTO pizza_topping (topping_type, pizza_id) VALUES (?, ?)]
-[parameters: ('M', 7)]
-(Background on this error at: http://sqlalche.me/e/13/gkpj)
-
-[[With using traceback technique I am adding 
-
+> sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) CHECK constraint failed: toppingtype
+> [SQL: INSERT INTO pizza_topping (topping_type, pizza_id) VALUES (?, ?)]
+> [parameters: ('M', 7)]
+> (Background on this error at: http://sqlalche.me/e/13/gkpj)
+With using traceback technique I am adding: 
+```
 if order_name and pizza_size_str and crust_type_str and toppings_list:
+```
+At line 71 and indenting everything underneath before the return. Now orders are being displayed, all the other functions are working. 
 
-[[at line 71 and indenting everything underneath before the return. Now orders are being displayed, all the other functions are working. 
-]]
 
 ## Exercise 2
 
-[[After running the code and typing in my city, Modesto, it gave back: 
-
-Internal Server Error, KeyError: 'name'. 
+After running the code and typing in my city, Modesto, it gave back: 
+>Internal Server Error, KeyError: 'name'. 
 
 [[I first wanted to check the api documentation to make sure the code was calling the correct api params, and that's where I found the problem. On line 39, 40, and 45:
 

@@ -119,11 +119,11 @@ after running python3 main.py we get another error:
 
 seeing that it breaks in the binary_search function at the 'mid' variable on the log. Doing a traceback technique we find that: 
 ```
-mid = len(arr) / 2
+mid = (high + low) / 2
 ```
 needs to be
 ```
-mid = len(arr) // 2
+mid = (high + low) // 2
 ```
 After running main.py again we see that there are no more errors but it is not returning the list_of_nums properly. It was able to show the 
 sorted list of nums
